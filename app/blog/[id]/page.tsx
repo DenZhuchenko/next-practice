@@ -20,9 +20,11 @@ async function getData(id: string) {
 
 
 
-export const generateMetadata =  ({params: {id}}: Props) => {
+export const generateMetadata = async ({params: {id}}: Props) => {
+    const postBody:IPostBody = await getData(id)
+
     return {
-        title: id
+        title: postBody.title
     }
 }
 
@@ -30,6 +32,7 @@ const BlogID = async ({params: {id}}: Props) => {
 
 
     const postBody:IPostBody = await getData(id)
+    console.log(postBody)
 
     return (
         <div>

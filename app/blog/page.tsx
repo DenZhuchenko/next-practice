@@ -1,11 +1,16 @@
-import React from 'react';
+'use client'
 import {Metadata} from "next";
-import Link from "next/link";
+import Posts from "@/components/Posts";
+
 
 async function getData() {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+        return response.json()
+    } catch (err) {
+        console.log(err.message)
+    }
 
-    return response.json()
 }
 
 export const metadata: Metadata = {
@@ -19,13 +24,7 @@ export default async function Blog() {
     return (
         <>
             <h1> Blog Page </h1>
-            <ul>
-                {posts.map((post: any) => (
-                    <li key={post.id}>
-                        <Link href={`/blog/${post.id}`}>{post.title}</Link>
-                    </li>
-                ))}
-            </ul>
+            <Posts posts={posts}/>
         </>
     )
 };
